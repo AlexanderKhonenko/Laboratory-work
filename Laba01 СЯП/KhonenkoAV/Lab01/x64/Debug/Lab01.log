@@ -1,3 +1,0 @@
-﻿  Lab01.cpp
-c:\users\alexander\source\repos\khonenkoav\lab01\lab01.cpp(5): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  Lab01.vcxproj -> C:\Users\Alexander\source\repos\KhonenkoAV\x64\Debug\Lab01.exe
