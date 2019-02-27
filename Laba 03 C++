@@ -9,22 +9,24 @@
 #include <cmath>
 using namespace std;
 
-int main(double x){
+int main(double x) {
 	setlocale(LC_ALL, "Russian");
-	double y, xstart, xend, dx;
+	double y=0, xstart, xend, dx;
 	cout << "Введите начальное значение х: "; cin >> xstart;
 	cout << "Введите конечное значение х: "; cin >> xend;
 	cout << "Введите шаг изменения: "; cin >> dx;
-	cout << "       x y" << endl;
+	cout << "|\t" <<"x"<<"\t|\t"<<"y"<<"\t"<< endl;
 	for (double i = xstart; i <= xend; i += dx)
 	{
-		if (i < -7 || i>3) cout << "Функция неопределенна" <<endl;
-		else if (i <=-6) y = 1;
-		else if (i <=-4) y = -((4+i)/2);
-		else if (i<0) y = sqrt(4-(i+2)*(i+2));
-		else if (i<2) y = -(sqrt(1 - (i - 1)*(i - 1)));
-		else if (i < 3) y = -i + 2;
-		cout << setw(8) << i << " " << y << endl;
+		if (i < -7 || i>3){
+			cout <<"|\t"<< i << "\t|\t"<<"Функция неопределена" << endl;
+		}
+		else if (i <= -6) y = 1;
+		else if (i <= -4) y = -((4 + i) / 2);
+		else if (i < 0) y = sqrt(4 - (i + 2)*(i + 2));
+		else if (i < 2) y = -(sqrt(1 - (i - 1)*(i - 1)));
+		else if (i <= 3) y = -i + 2;
+		if (i>=-7 && i<=3)
+			cout << "|\t" << i << "\t|\t" << y <<"\t"<< endl;
 	}
-	return 0;
-}
+	r
