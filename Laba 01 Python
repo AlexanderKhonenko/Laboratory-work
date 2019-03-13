@@ -1,0 +1,9 @@
+#Напишите программу расчета по двум формулам.
+
+import math
+print ("Введите х=")
+x = int(input())
+z1 = (math.sqrt(2 * x + 2 * math.sqrt(x*x - 4)))/((math.sqrt(x*x-4))+x+2)
+z2 = 1/math.sqrt(x+2)
+print (z1)
+print (z2)
