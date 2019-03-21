@@ -1,0 +1,37 @@
+#include "pch.h"
+#include <iostream> 
+#include <fstream> 
+#include <locale>
+#define _CRT_SECURE_NO_WARNINGS
+
+int main() {
+
+	setlocale(LC_ALL, "Rus");
+	char BF[100];
+	int size = 0, max = 0, count = 0;
+	char word[100];
+	std::ifstream infile;
+	infile.open("Text.txt");
+
+	if (!infile.is_open()) {
+		std::cout << "Файл не найден" << std::endl;
+	}
+	else{
+		while (infile >> BF)
+		{
+			size = strlen(BF);
+			if (size > max)
+			{
+				strcpy_s(word, BF);
+				count = 1;
+				max = size;
+				continue;
+			}
+			if (strcmp(word, BF) == 0)
+				count++;
+		}
+	}
+	infile.close();
+	std::cout << "Самое длинное слово: " << word << std::endl;
+	std::cout << "Число повторений: " << count << std::endl;
+}
