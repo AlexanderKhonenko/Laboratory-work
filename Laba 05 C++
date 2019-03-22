@@ -1,0 +1,64 @@
+#include "pch.h"
+#include <iostream>
+#include <locale>
+#include <iomanip>
+using namespace std;
+int main() {
+	setlocale(LC_ALL, "Rus");
+	cout << "Введите матрицу 3х3 " << endl;
+	int a[3][3];
+	int i;
+	int j;
+	for (i = 0; i < 3; i++)
+		for (j = 0; j < 3; j++)
+			cin >> a[i][j];
+	for (i = 0; i < 3; i++)  // Вывод предпросмотра
+		for (j = 0; j < 3; j++)
+			cout  << a[i][j] << " ";
+	cout << endl;
+	int choose;
+	cout << "Выберите задачу" << endl;
+	cout << "1. Определить номер первого из столбцов, содержащих хотя бы один нулевой элемент." << endl;
+	cout << "2. Упорядочивание матрицы." << endl;
+	cin >> choose;
+	switch (choose) {
+	case 1:
+		bool all_posit;					// Задача 1
+		for (j = 0; j < 3; j++) {
+			all_posit = true;
+			for (i = 0; i < 3; i++)
+				if (a[i][j] == 0) { cout << "Номер столбца: " << j; }
+		}
+		break;
+	case 2:
+		long *sum = new long[i];		// массив сумм отрицательных элементов строк
+		for (i = 0; i < 3; i++) {
+			sum[i] = 0;
+			for (int j = 0; j < 3; j += 2)
+				if (a[i][j] < 0)
+					sum[i] += a[i][j];
+		}
+		for (i = 0; i < 3; i++) {		// контрольный вывод
+			for (int j = 0; j < 3; j++) cout << setw(4) << a[i][j] << " ";
+			cout << "| " << sum[i] << endl;
+		}
+		cout << "\n" << endl;
+		for (int i = 0; i < 3 - 1; i++) { // упорядочивание матрицы
+			int nmin = i;
+			for (int j = i + 1; j < 3; j++)
+				if (sum[j] < sum[nmin]) nmin = j;
+			long buf_sum = sum[i]; sum[i] = sum[nmin]; sum[nmin] = buf_sum;
+			for (int j = 0; j < 3; j++) {
+				int buf_a = a[i][j]; a[i][j] = a[nmin][j]; a[nmin][j] = buf_a;
+			}
+		}
+		cout << "Упорядоченная матрица" << endl;
+		for (int i = 0; i < 3; i++) { // вывод упорядоченной матрицы
+			for (int j = 0; j < 3; j++) cout << setw(4) << a[i][j] << " ";
+			cout << endl;
+		}
+	}
+
+}
+
+
