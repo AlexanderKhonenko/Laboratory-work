@@ -1,0 +1,143 @@
+/*Описать структуру с заданным именем и полями. 
+Разработать программу, обрабатывающую массив таких структур указанным способом.*/
+
+
+
+
+
+#include "pch.h"
+#include <windows.h>
+#include <iostream>
+#include <cstring>
+#include <cstdlib>
+#include <cstdio>
+#include <iomanip>
+#include <locale>
+const int l_name = 30;
+const int l_birthday = 8;
+const int l_znakzodi = 8;
+const int l_buf = l_name + l_birthday + l_znakzodi;
+const int l_dbase = 3;
+struct Data {
+	int day;
+	int month;
+	int year;
+};
+struct ZNAK {
+	char firstName[l_name + 1];
+	char lastName[l_name + 1];
+	Data birthday;
+	char znakzodi[l_znakzodi + 1];
+
+};
+
+void sort(ZNAK *dbase);
+void poisk_female(ZNAK *dbase);
+bool vvod_i_proverka_vremeni(int &day, int &month, int &year);
+using namespace std;
+
+int main() {
+	setlocale(LC_ALL, "Rus");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	ZNAK *dbase = new ZNAK[l_dbase];
+	int day, month, year;
+	for (int i = 0; i < l_dbase; i++)
+	{
+		cout << "_________________________________" << endl;
+		cout << "Запись номер " << i << endl;
+		cout << "Введите Имя" << endl;
+		cin.getline(dbase[i].firstName, l_name);
+
+		cout << "Введите Фамилию" << endl;
+
+		cin.getline(dbase[i].lastName, l_name);
+		cout << "Введите знак зодиака" << endl;
+
+		cin.getline(dbase[i].znakzodi, l_znakzodi);
+		vvod_i_proverka_vremeni(day, month, year);
+		dbase[i].birthday.day = day;
+		dbase[i].birthday.month = month;
+		dbase[i].birthday.year = year;
+	}
+	sort(dbase);
+	cout << "Сортированные записи:" << endl;
+	for (int i = 0; i < l_dbase; i++) {
+		cout << dbase[i].firstName << ' ' << dbase[i].lastName << ' ' << dbase[i].znakzodi << "  ";
+		cout << dbase[i].birthday.day << "." << dbase[i].birthday.month << "." << dbase[i].birthday.year << endl;
+	}
+	poisk_female(dbase);
+	system("pause");
+	return 0;
+}
+
+void sort(ZNAK *dbase) {
+	bool sort = false;
+	ZNAK buffer;
+	while (sort) {
+		sort = 0;
+		for (int i = 0; i < l_dbase; i++) {
+			if (dbase[i].birthday.year > dbase[i + 1].birthday.year) {
+				buffer = dbase[i];
+				dbase[i] = dbase[i + 1];
+				dbase[i + 1] = buffer;
+				sort = 1;
+			}
+			if (dbase[i].birthday.year == dbase[i + 1].birthday.year) {
+				if (dbase[i].birthday.month > dbase[i + 1].birthday.month) {
+					buffer = dbase[i];
+					dbase[i] = dbase[i + 1];
+					dbase[i + 1] = buffer;
+					sort = 1;
+				}
+				else if ((dbase[i].birthday.year == dbase[i + 1].birthday.year) && (dbase[i].birthday.month == dbase[i + 1].birthday.month) && (dbase[i].birthday.day > dbase[i + 1].birthday.day)) {
+					buffer = dbase[i];
+					dbase[i] = dbase[i + 1];
+					dbase[i + 1] = buffer;
+					sort = 1;
+				}
+			}
+
+		}
+	}
+}
+void poisk_female(ZNAK *dbase) {
+	char *female = new char[l_name + 1];
+	bool not_found = true;
+	while (true) {
+		cout << "Введите фамилию: " << endl;
+		cin >> female;
+		cin.get();
+		for (int i = 0; i < l_dbase; i++) {
+			if (strcmp(dbase[i].lastName, female) == 0) {
+				cout << "Найденная запись: " << endl;
+				cout << dbase[i].firstName << ' ' << dbase[i].lastName << ' ' << dbase[i].znakzodi << " "; cout << dbase[i].birthday.day << "." <<
+					dbase[i].birthday.month << "." << dbase[i].birthday.year << endl;
+				not_found = false;
+			}
+		}
+		if (not_found) cout << "Людей с такой фамилией нет" << endl;
+
+	}
+}
+bool vvod_i_proverka_vremeni(int &day, int &month, int &year) {
+	char *birthday = new char[l_birthday + 1];
+	char temp1[4], temp2[4], temp3[4];
+	do {
+		cout << "Введите дату рождения в формате ДД.ММ.ГГ или end" << endl;
+		cin >> birthday;
+		cin.get();
+		if (strcmp(birthday, "end") == 0) {
+			return 0;
+		}
+		strncpy_s(temp1, birthday, 2);
+		strncpy_s(temp2, &birthday[3], 2);
+		strncpy_s(temp3, &birthday[6], 2);
+		day = atoi(temp1);
+
+		month = atoi(temp2);
+		year = atoi(temp3);
+
+	} while (!(day > 0 && day < 32 && month > 0 && month < 13));
+	return 1;
+}
