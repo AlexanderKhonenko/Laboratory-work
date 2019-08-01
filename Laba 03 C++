@@ -29,5 +29,4 @@ int main(double x) {
 		if (i>=-7 && i<=3)
 			cout << "|\t" << i << "\t|\t" << y <<"\t"<< endl;
 	}
-	return 0;
-}
+	r
