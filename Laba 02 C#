@@ -1,0 +1,72 @@
+using System;
+namespace Laba2
+{
+
+    class Target
+    {
+        static double R, R2, X, Y, x,y;
+        public static void Main()
+        {
+            Console.WriteLine("Лабораторная работа №2. Вариант 14");
+            Console.WriteLine("Задание 1");
+            Console.Write("Введите значение х: ");
+            x = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine(x);
+            Graph(x);
+            Console.WriteLine("Задание 2");
+            Console.Write("Введите x:");
+            double X = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите y:");
+            double Y = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите r:");
+            double R = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите r2:");
+            double R2 = Convert.ToDouble(Console.ReadLine());
+            Shot(X, Y, R, R2);
+            Console.WriteLine("Нажмите Enter, чтобы продолжить");
+            Console.ReadKey();
+
+
+        }
+
+        
+        public static void Shot (double X, double Y, double R, double R2)
+        {
+
+            if (Math.Pow(X, 2) + Math.Pow(Y, 2) <= Math.Pow(R, 2) && Math.Pow(X, 2) + Math.Pow(Y, 2) >= Math.Pow(R2, 2) && ((X >= 0 && Y >= 0) || X <= 0 && Y <= 0))
+            {
+                Console.WriteLine("Есть пробитие");
+            }
+            else
+                Console.WriteLine("Не пробил");
+
+
+
+        }
+
+
+        public static void Graph(double x)
+        {
+
+            double y=0;
+            
+            if (x > -6 && x <= -4)
+            {
+                y = -2;
+            }
+            else if (x > -4 && x <= 0)
+            {
+                y = x / 4;
+            }
+            else if (x > 0 && x <= 2)
+            {
+                y = x * x;
+            }
+            else if (x > 2 && x <= 12)
+            {
+                y = 5 - ((5 * x) / 10);
+            }
+            Console.WriteLine(y);
+        }
+    }
+}
