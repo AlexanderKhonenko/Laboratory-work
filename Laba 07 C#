@@ -1,0 +1,62 @@
+using System;
+using System.IO;
+namespace lab7
+{
+    class Classl
+    {
+        static void Main()
+        {
+            int i;
+            StreamReader f = new StreamReader(@"C:\Text.txt");
+            string[] s = f.ReadToEnd().Split('\n', ' ');
+            for (i=0; i < s.Length-1; i++)
+                if (int.Parse(s[i]) == '\n')
+                {
+                    Console.WriteLine("------------");
+                }
+                else { 
+                switch (int.Parse(s[i]))
+                {
+                    case 0:
+                        Console.WriteLine("Ноль");
+                        break;
+                    case 1:
+                        Console.WriteLine("Один");
+                        break;
+                    case 2:
+                        Console.WriteLine("Два");
+                        break;
+                    case 3:
+                        Console.WriteLine("Три");
+                        break;
+                    case 4:
+                        Console.WriteLine("Четырe");
+                        break;
+                    case 5:
+                        Console.WriteLine("Пять");
+                        break;
+                    case 6:
+                        Console.WriteLine("Шесть");
+                        break;
+                    case 7:
+                        Console.WriteLine("Семь");
+                        break;
+                    case 8:
+                        Console.WriteLine("Восемь");
+                        break;
+                    case 9:
+                        Console.WriteLine("Девять");
+                        break;
+                    default:
+                        Console.WriteLine("Не соответственное значение");
+                        break;
+
+                }
+            Console.ReadKey();
+        }
+    }
+
+    }
+
+
+}
