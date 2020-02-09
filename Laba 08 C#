@@ -1,0 +1,174 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Parking park = new Parking(100);
+        park.AddCar("A111AB", "red", "Вася");
+        park.AddCar("B234CK", "green", "Петя");
+        park.AddCar("B493MX", "blue", "Коля");
+        park.AddCar("Y393AA", "grey", "Дима");
+        park.PrintAllCar();
+        Console.WriteLine("--------------------------------------");
+        try { 
+        park.RemCar("");
+        }
+        catch
+        {
+            Console.WriteLine("Длина введенного номера равна 0");
+        }
+        park.AddCar("E610BM", "red", "Другой Петя");
+        park.PrintAllCar();
+        Console.WriteLine("--------------------------------------");
+        park.Find("red");
+        Console.WriteLine("--------------------------------------");
+        park.Find("B234CK");
+        Console.ReadKey();
+    }
+}
+
+class Parking
+{
+    private bool[] place; 
+    private List<Car> list = new List<Car>();
+    string owner;
+    string number;
+    string color;
+
+    public string this[string propname]
+    {
+        get
+        {
+            switch (propname)
+            {
+                case "name": return "Владелец: " + owner;
+                case "color": return "Цвет авто: " + color;
+                case "number": return "ГосНомер: "+ number;
+                default: return null;
+            }
+        }
+        set
+        {
+            switch(propname)
+            {
+                            
+                case "name":
+                    owner = value;
+                break;
+                case "color":
+                    color = value;
+                break;
+                case "phone":
+                    number = value;
+                break;
+            }
+        }
+        
+    }
+
+    public Parking(int count)
+    {
+        place = new bool[count];
+    }
+    public void AddCar(string number, string color,string owner) 
+    {
+        for (int i = 0; i < place.Length; i++)
+        {
+            if (place[i] == false)
+            {
+                place[i] = true;
+                list.Add(new Car(number,color,owner, i));
+                return;
+            }
+        }
+        Console.WriteLine("Нет свободных мест");
+    }
+    public void RemCar(string number) 
+    {
+        try { 
+            if (number.Length == 0)
+            {
+                throw new Exception("Длина номера не может быть равна 0");
+            }
+            foreach (Car car in list)
+            {
+                if (car.number == number)
+                {
+                    list.Remove(car);
+                    place[car.order] = false;
+                    return;
+                }
+            }
+        }
+        finally
+        {
+            Console.WriteLine("Нет такой машины: [{0}]", number);
+        }
+        
+    }
+    public void RemCar(int n) 
+    {
+        foreach (Car car in list)
+        {
+            if (car.order == n)
+            {
+                list.Remove(car);
+                place[car.order] = false;
+                return;
+            }
+        }
+        Console.WriteLine("Нет такой машины: [{0}]", n);
+    }
+    public void PrintAllCar() 
+    {
+        foreach (Car car in list)
+        {
+            
+            Console.WriteLine(car);
+        }
+    }
+    public void Find(string param)
+    {
+        Console.WriteLine("Поиск с параметром: [{0}]", param);
+        foreach (Car car in list)
+        {
+            if (car.color == param || car.number == param || car.owner == param)
+            {
+                Console.WriteLine(car);
+            }
+        }
+    }
+    public void Find (int place) 
+    {
+        Console.WriteLine("Поиск с параметром: [{0}]", place);
+        foreach (Car car in list)
+        {
+            if (car.order == place)
+            {
+                Console.WriteLine(car);
+            }
+        }
+    }
+
+    private struct Car
+    {
+        public string number; 
+        public string color; 
+        public string owner; 
+        public int order; 
+        public Car(string num, string col, string own, int ord)
+        {
+            number = num;
+            color = col;
+            owner = own;
+            order = ord;
+        }
+        public override string ToString()
+        {
+            return string.Format("[{0}], [{1}], [{2}], [{3}]", number, color, owner, order);
+        }
+    }
+  
+}
