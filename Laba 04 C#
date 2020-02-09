@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fraction
+{
+    class Fraction
+    {
+        int Numerator;
+        int Denominator;
+
+        public Fraction(int N, int D)
+        {
+            if (D == 0)
+            {
+                throw new DivideByZeroException();
+            }
+            Numerator = N; Denominator = D;
+        }
+        public Fraction()
+        {
+            Numerator = 1; Denominator = 1;
+        }
+        public static Fraction operator +(Fraction a, Fraction b)
+        {
+            return new Fraction(a.Numerator * b.Denominator + b.Numerator * a.Denominator, a.Denominator * b.Denominator).Normalization();
+        }
+        public static Fraction operator -(Fraction a, Fraction b)
+        {
+            return new Fraction(a.Numerator * b.Denominator - b.Numerator * a.Denominator, a.Denominator * b.Denominator).Normalization();
+        }
+        public static Fraction operator *(Fraction a, Fraction b)
+        {
+            return new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator).Normalization();
+        }
+        public static Fraction operator /(Fraction a, Fraction b)
+        {
+            return new Fraction(a.Numerator * b.Denominator, b.Numerator * a.Denominator).Normalization();
+        }
+        public Fraction Normalization()
+        {
+            return new Fraction(Numerator / GetCommonDivisor(Numerator, Denominator), Denominator / GetCommonDivisor(Numerator, Denominator));
+        }
+        private static int GetCommonDivisor(int i, int j)
+        {
+            i = Math.Abs(i);
+            j = Math.Abs(j);
+            while (i != j)
+                if (i > j) { i -= j; }
+                else { j -= i; }
+            return i;
+        }
+
+
+        public override string ToString()
+        {
+            int iPart = Numerator / Denominator;
+            if (iPart != 0)
+                return string.Format("{0} {1}", iPart, GetRest());
+            else
+                return string.Format("{0}/{1}", Numerator, Denominator);
+        }
+        public object GetRest()
+        {
+            if (Numerator != Denominator)
+            { return new Fraction(Numerator % Denominator, Denominator); }
+            return null;
+
+        }
+    }
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("Лабораторная 4. Вариант 14| \n---------------------------\n");
+            try
+            {
+                Fraction f1 = new Fraction(3, 0);
+                Fraction f2 = new Fraction(2, 3);
+                Console.WriteLine("Дробь 1: {0}\nДробь 2: {1}", f1, f2 );
+                Console.WriteLine("\nРешение: ");
+
+                Console.WriteLine("{0} + {1} = {2}", f1, f2, f2 + f1);
+
+                Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception caught:{0}", e.Message);
+                Console.ReadKey();
+            }
+        }
+    }
+}
