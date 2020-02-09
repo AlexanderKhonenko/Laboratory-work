@@ -1,0 +1,124 @@
+using System;
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Лабораторная работа №6\nВариант 14");
+        int i, j, z, k, temp, temp2, temp3;
+
+        Console.WriteLine("Исходная матрица");
+        Console.Write("Ввести размерность массива: \n");
+        int n = int.Parse(Console.ReadLine());
+        Console.Write("Введите кол-во поворотов: ");
+        int rotate = Convert.ToInt32(Console.ReadLine());
+        Random rnd = new Random();
+        int[,] a = new int[n, n];
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+            {
+                a[i, j] = 1 + rnd.Next(10);
+                Console.Write("\t{0}", a[i, j]);
+            }
+            Console.WriteLine();
+            Console.ReadLine();
+        }
+        Console.WriteLine("Преобразованная матрица");
+        Console.ReadLine();
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+                Console.Write(" " + a[i, j]);
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+
+            for (i = 0; i < n / 2; i++)
+            {
+                for (z = n - 1; z > 0; z--)
+                {
+                    for (j = i, temp = a[i, j]; j < n - 1 - i; j++)
+                    {
+                        temp2 = a[i, (j + 1)];
+                        a[i, (j + 1)] = temp;
+                        temp = temp2;
+                    }
+                    for (k = i + 1; k < n - i; k++)
+                    {
+                        temp3 = temp;
+                        temp = a[k, j];
+                        a[k, j] = temp3;
+                    }
+                    for (j--, k--; j >= i; j--)
+                    {
+                        temp3 = temp;
+                        temp = a[k, j];
+                        a[k, j] = temp3;
+                    }
+
+                    for (j++, k--; k >= i; k--)
+                    {
+                        temp3 = temp;
+                        temp = a[k, j];
+                        a[k, j] = temp3;
+                    }
+                }
+
+            }
+        int[,] b = new int[n, n];
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+            {
+                b[i, j] = a[i,j];
+            }
+        }
+
+        for (i = 0; i < n / 2; i++)
+        {
+            for (z = n - 1; z > 0; z--)
+            {
+                for (j = i, temp = a[i, j]; j < n - 1 - i; j++)
+                {
+                    temp2 = a[i, (j + 1)];
+                    a[i, (j + 1)] = temp;
+                    temp = temp2;
+                }
+                for (k = i + 1; k < n - i; k++)
+                {
+                    temp3 = temp;
+                    temp = a[k, j];
+                    a[k, j] = temp3;
+                }
+                for (j--, k--; j >= i; j--)
+                {
+                    temp3 = temp;
+                    temp = a[k, j];
+                    a[k, j] = temp3;
+                }
+
+                for (j++, k--; k >= i; k--)
+                {
+                    temp3 = temp;
+                    temp = a[k, j];
+                    a[k, j] = temp3;
+                }
+            }
+
+        }
+
+        for (i = 0; i < n; i++)
+            {
+                for (j = 0; j < n; j++)
+                    Console.Write(" " + a[i, j]);
+                Console.WriteLine();
+            }
+        
+
+        Console.ReadLine();
+        
+    }
+
+}
