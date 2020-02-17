@@ -11,7 +11,7 @@ namespace Laba2
         static double R, R2, X, Y, x, y;
         static void Main()
         {
-            Console.WriteLine("Лабораторная работа №2. Вариант 14");
+            Console.WriteLine("Лабораторная работа №2. Вариант 10");
             Console.WriteLine("----------------------------------");
             Console.WriteLine("Задание 1");
             Console.WriteLine("Введите значение х: ");
