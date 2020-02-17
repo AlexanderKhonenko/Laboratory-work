@@ -1,19 +1,25 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Laba2
 {
-
-    class Target
+    class Program
     {
-        static double R, R2, X, Y, x,y;
-        public static void Main()
+        static double R, R2, X, Y, x, y;
+        static void Main()
         {
             Console.WriteLine("Лабораторная работа №2. Вариант 14");
+            Console.WriteLine("----------------------------------");
             Console.WriteLine("Задание 1");
-            Console.Write("Введите значение х: ");
+            Console.WriteLine("Введите значение х: ");
             x = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine(x);
             Graph(x);
+            Console.WriteLine("\n");
             Console.WriteLine("Задание 2");
+            Console.WriteLine("---------");
             Console.Write("Введите x:");
             double X = Convert.ToDouble(Console.ReadLine());
             Console.Write("Введите y:");
@@ -22,15 +28,50 @@ namespace Laba2
             double R = Convert.ToDouble(Console.ReadLine());
             Console.Write("Введите r2:");
             double R2 = Convert.ToDouble(Console.ReadLine());
-            Shot(X, Y, R, R2);
+            //Shot(X, Y, R, R2);
             Console.WriteLine("Нажмите Enter, чтобы продолжить");
             Console.ReadKey();
+        }
 
+        public static void Graph(double x)
+        {
+
+            double y = 0;
+
+            if (x < -10)
+            {
+                Console.WriteLine("На данном значении Х, У неопределен");
+
+            }
+            else if (x > -10 && x <= -6)
+            {
+                y = -Math.Sqrt((R*R) - Math.Pow(x+8,2))+2;
+            }
+            else if (x > -6 && x <= -4)
+            {
+                y = 2;
+            }
+            else if (x > -4 && x <= 2)
+            {
+                y = -x / 2;
+            }
+            else if (x > 2 && x <= 4)
+            {
+                y = x-3;
+            }
+            else
+            {
+                Console.WriteLine("На данном значении Х, У неопределен");
+            }
+            
+            Console.WriteLine("Значение У равно: ");
+            Console.WriteLine(y);
+            Console.WriteLine("------------------");
 
         }
 
-        
-        public static void Shot (double X, double Y, double R, double R2)
+        //The semen skinet
+        public static void Shot(double X, double Y, double R, double R2)
         {
 
             if (Math.Pow(X, 2) + Math.Pow(Y, 2) <= Math.Pow(R, 2) && Math.Pow(X, 2) + Math.Pow(Y, 2) >= Math.Pow(R2, 2) && ((X >= 0 && Y >= 0) || X <= 0 && Y <= 0))
@@ -39,34 +80,8 @@ namespace Laba2
             }
             else
                 Console.WriteLine("Не пробил");
-
-
-
         }
 
 
-        public static void Graph(double x)
-        {
-
-            double y=0;
-            
-            if (x > -6 && x <= -4)
-            {
-                y = -2;
-            }
-            else if (x > -4 && x <= 0)
-            {
-                y = x / 4;
-            }
-            else if (x > 0 && x <= 2)
-            {
-                y = x * x;
-            }
-            else if (x > 2 && x <= 12)
-            {
-                y = 5 - ((5 * x) / 10);
-            }
-            Console.WriteLine(y);
-        }
     }
 }
