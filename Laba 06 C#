@@ -1,124 +1,50 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-class Program
+namespace Laba6
 {
-    static void Main(string[] args)
+    class Program
     {
-        Console.WriteLine("Лабораторная работа №6\nВариант 14");
-        int i, j, z, k, temp, temp2, temp3;
-
-        Console.WriteLine("Исходная матрица");
-        Console.Write("Ввести размерность массива: \n");
-        int n = int.Parse(Console.ReadLine());
-        Console.Write("Введите кол-во поворотов: ");
-        int rotate = Convert.ToInt32(Console.ReadLine());
-        Random rnd = new Random();
-        int[,] a = new int[n, n];
-        for (i = 0; i < n; i++)
+        static void Main(string[] args)
         {
-            for (j = 0; j < n; j++)
+            int[,] mas = new int[10, 10];
+            Random rnd = new Random();
+            for (int i = 0; i < 10; i++)
             {
-                a[i, j] = 1 + rnd.Next(10);
-                Console.Write("\t{0}", a[i, j]);
-            }
-            Console.WriteLine();
-            Console.ReadLine();
-        }
-        Console.WriteLine("Преобразованная матрица");
-        Console.ReadLine();
-        for (i = 0; i < n; i++)
-        {
-            for (j = 0; j < n; j++)
-                Console.Write(" " + a[i, j]);
-            Console.WriteLine();
-        }
-        Console.WriteLine();
-
-            for (i = 0; i < n / 2; i++)
-            {
-                for (z = n - 1; z > 0; z--)
+                for (int j = 0; j < 10; j++)
                 {
-                    for (j = i, temp = a[i, j]; j < n - 1 - i; j++)
-                    {
-                        temp2 = a[i, (j + 1)];
-                        a[i, (j + 1)] = temp;
-                        temp = temp2;
-                    }
-                    for (k = i + 1; k < n - i; k++)
-                    {
-                        temp3 = temp;
-                        temp = a[k, j];
-                        a[k, j] = temp3;
-                    }
-                    for (j--, k--; j >= i; j--)
-                    {
-                        temp3 = temp;
-                        temp = a[k, j];
-                        a[k, j] = temp3;
-                    }
-
-                    for (j++, k--; k >= i; k--)
-                    {
-                        temp3 = temp;
-                        temp = a[k, j];
-                        a[k, j] = temp3;
-                    }
+                    mas[i, j] = -5 + rnd.Next(15);
+                    Console.Write(mas[i, j] + " ");
                 }
-
-            }
-        int[,] b = new int[n, n];
-        for (i = 0; i < n; i++)
-        {
-            for (j = 0; j < n; j++)
-            {
-                b[i, j] = a[i,j];
-            }
-        }
-
-        for (i = 0; i < n / 2; i++)
-        {
-            for (z = n - 1; z > 0; z--)
-            {
-                for (j = i, temp = a[i, j]; j < n - 1 - i; j++)
-                {
-                    temp2 = a[i, (j + 1)];
-                    a[i, (j + 1)] = temp;
-                    temp = temp2;
-                }
-                for (k = i + 1; k < n - i; k++)
-                {
-                    temp3 = temp;
-                    temp = a[k, j];
-                    a[k, j] = temp3;
-                }
-                for (j--, k--; j >= i; j--)
-                {
-                    temp3 = temp;
-                    temp = a[k, j];
-                    a[k, j] = temp3;
-                }
-
-                for (j++, k--; k >= i; k--)
-                {
-                    temp3 = temp;
-                    temp = a[k, j];
-                    a[k, j] = temp3;
-                }
-            }
-
-        }
-
-        for (i = 0; i < n; i++)
-            {
-                for (j = 0; j < n; j++)
-                    Console.Write(" " + a[i, j]);
                 Console.WriteLine();
             }
-        
+            //подсчет локальных минимумов
+            int count = 0;
+            for (int i = 1; i < 9; i++)
+            {
+                for (int j = 1; j < 9; j++)
+                {
+                    if (mas[i - 1, j] > mas[i, j] && mas[i + 1, j] > mas[i, j])
+                        if (mas[i, j - 1] > mas[i, j] && mas[i, j + 1] > mas[i, j])
+                            count++;
+                }
+            }
+            Console.WriteLine("Количество локальных минимумов: " + count);
+            //сумма модулей элементов, расположенных выше главной диагонали
+            int summa = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = i + 1; j < 10; j++)
+                {
+                    summa += Math.Abs(mas[i, j]);
+                }
+            }
+            Console.WriteLine("Сумма модулей элементов, расположенных выше главной диагонали = " + summa);
+            Console.ReadKey();
+        }
 
-        Console.ReadLine();
-        
     }
-
 }
