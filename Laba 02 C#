@@ -8,10 +8,10 @@ namespace Laba2
 {
     class Program
     {
-        static double R, R2, X, Y, x, y;
+        static double R, X, Y, x, y, a, b;
         static void Main()
         {
-            Console.WriteLine("Лабораторная работа №2. Вариант 10");
+            Console.WriteLine("Лабораторная работа №2. Вариант 14");
             Console.WriteLine("----------------------------------");
             Console.WriteLine("Задание 1");
             Console.WriteLine("Введите значение х: ");
@@ -26,9 +26,11 @@ namespace Laba2
             double Y = Convert.ToDouble(Console.ReadLine());
             Console.Write("Введите r:");
             double R = Convert.ToDouble(Console.ReadLine());
-            Console.Write("Введите r2:");
-            double R2 = Convert.ToDouble(Console.ReadLine());
-            //Shot(X, Y, R, R2);
+            Console.Write("Введите a:");
+            double a = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите b:");
+            double b = Convert.ToDouble(Console.ReadLine());
+            hitOrNotHit(x, y, R, a, b);
             Console.WriteLine("Нажмите Enter, чтобы продолжить");
             Console.ReadKey();
         }
@@ -70,16 +72,26 @@ namespace Laba2
 
         }
 
-        //The semen skinet
-        public static void Shot(double X, double Y, double R, double R2)
+        public static void hitOrNotHit(double x, double y, double R, double a, double b)
         {
-
-            if (Math.Pow(X, 2) + Math.Pow(Y, 2) <= Math.Pow(R, 2) && Math.Pow(X, 2) + Math.Pow(Y, 2) >= Math.Pow(R2, 2) && ((X >= 0 && Y >= 0) || X <= 0 && Y <= 0))
+            bool hitOrNotHit = false;
+            if ((Math.Pow(x, 2) + Math.Pow(y, 2) >= Math.Pow(R, 2)) && x >= 0 && y >= 0 && x <= a && y <= b)
             {
-                Console.WriteLine("Есть пробитие");
+                hitOrNotHit = true;
             }
             else
-                Console.WriteLine("Не пробил");
+            if (x <= 0 && y <= 0 && (Math.Pow(x, 2) + Math.Pow(y, 2) <= Math.Pow(R, 2)) && x >= -a && y >= -b)
+            {
+                hitOrNotHit = true;
+            }
+            if (hitOrNotHit == true)
+            {
+                Console.WriteLine("Точка попадает");
+            }
+            else
+            {
+                Console.WriteLine("Точка не попадает");
+            }
         }
 
 
