@@ -1,95 +1,117 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Fraction
+namespace ConsoleApp2
 {
-    class Fraction
+
+    class Polynomial
     {
-        int Numerator;
-        int Denominator;
+        private double _a;
+        private double _b;
+        private double _c;
 
-        public Fraction(int N, int D)
+        public double A
         {
-            if (D == 0)
+            get { return _a; }
+            set { _a = value; }
+        }
+
+        public double B
+        {
+            get { return _b; }
+            set { _b = value; }
+        }
+
+        public double C
+        {
+            get { return _c; }
+            set { _c = value; }
+        }
+
+        public Polynomial() { }
+
+        public Polynomial(double a, double b, double c)
+        {
+            _a = a;
+            _b = b;
+            _c = c;
+        }
+
+        public void Calculation()
+        {
+            double d = _b * _b - 4 * _a * _c;
+            if (d >= 0)
             {
-                throw new DivideByZeroException();
+                d = Math.Sqrt(d);
+                double x1, x2;
+                x1 = (-_b + d) / _a * 2;
+                x2 = (-_b - d) / _a * 2;
+                Print();
+                Console.WriteLine("Корни уравнения\nx1 = {0} \nx2 = {1}", x1, x2);
             }
-            Numerator = N; Denominator = D;
-        }
-        public Fraction()
-        {
-            Numerator = 1; Denominator = 1;
-        }
-        public static Fraction operator +(Fraction a, Fraction b)
-        {
-            return new Fraction(a.Numerator * b.Denominator + b.Numerator * a.Denominator, a.Denominator * b.Denominator).Normalization();
-        }
-        public static Fraction operator -(Fraction a, Fraction b)
-        {
-            return new Fraction(a.Numerator * b.Denominator - b.Numerator * a.Denominator, a.Denominator * b.Denominator).Normalization();
-        }
-        public static Fraction operator *(Fraction a, Fraction b)
-        {
-            return new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator).Normalization();
-        }
-        public static Fraction operator /(Fraction a, Fraction b)
-        {
-            return new Fraction(a.Numerator * b.Denominator, b.Numerator * a.Denominator).Normalization();
-        }
-        public Fraction Normalization()
-        {
-            return new Fraction(Numerator / GetCommonDivisor(Numerator, Denominator), Denominator / GetCommonDivisor(Numerator, Denominator));
-        }
-        private static int GetCommonDivisor(int i, int j)
-        {
-            i = Math.Abs(i);
-            j = Math.Abs(j);
-            while (i != j)
-                if (i > j) { i -= j; }
-                else { j -= i; }
-            return i;
+            else Console.WriteLine("Дискриминант не существует.");
         }
 
-
-        public override string ToString()
+        public static Polynomial operator +(Polynomial pol1, Polynomial pol2)
         {
-            int iPart = Numerator / Denominator;
-            if (iPart != 0)
-                return string.Format("{0} {1}", iPart, GetRest());
-            else
-                return string.Format("{0}/{1}", Numerator, Denominator);
+            Polynomial pol = new Polynomial
+            {
+                _a = pol1._a + pol2._a,
+                _b = pol1._b + pol2._b,
+                _c = pol1._c + pol2._c
+            };
+            return pol;
         }
-        public object GetRest()
-        {
-            if (Numerator != Denominator)
-            { return new Fraction(Numerator % Denominator, Denominator); }
-            return null;
 
+        public static Polynomial operator -(Polynomial pol1, Polynomial pol2)
+        {
+            Polynomial pol = new Polynomial
+            {
+                _a = pol1._a - pol2._a,
+                _b = pol1._b - pol2._b,
+                _c = pol1._c - pol2._c
+            };
+            return pol;
         }
+
+        public static Polynomial operator *(Polynomial pol1, Polynomial pol2)
+        {
+            Polynomial pol = new Polynomial
+            {
+                _a = pol1._a * pol2._a,
+                _b = pol1._b * pol2._b,
+                _c = pol1._c * pol2._c
+            };
+            return pol;
+        }
+
+        public void Print()
+        {
+            if (_a != 0) Console.Write("{0}x^(2)", _a);
+            if (_b > 0) Console.Write("+{0}x", _b);
+            else if (_b < 0) Console.Write("{0}x", _b);
+            if (_c > 0) Console.Write("+" + _c);
+            else if (_c < 0) Console.Write(_c);
+            Console.WriteLine();
+        }
+
     }
+
     class Program
     {
         static void Main()
         {
-            Console.WriteLine("Лабораторная 4. Вариант 14| \n---------------------------\n");
-            try
-            {
-                Fraction f1 = new Fraction(3, 0);
-                Fraction f2 = new Fraction(2, 3);
-                Console.WriteLine("Дробь 1: {0}\nДробь 2: {1}", f1, f2 );
-                Console.WriteLine("\nРешение: ");
-
-                Console.WriteLine("{0} + {1} = {2}", f1, f2, f2 + f1);
-
-                Console.ReadKey();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught:{0}", e.Message);
-                Console.ReadKey();
-            }
+            Polynomial pol = new Polynomial(1, 4, 3);
+            Polynomial pol2 = new Polynomial(2, 8, 6);
+            pol.Calculation();
+            pol2.Calculation();
+            Console.WriteLine("Сумма");
+            (pol + pol2).Print();
+            Console.WriteLine("Разность");
+            (pol - pol2).Print();
+            Console.WriteLine("Умножение");
+            (pol * pol2).Print();
+            Console.ReadKey();
         }
     }
 }
