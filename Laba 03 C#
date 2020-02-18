@@ -6,7 +6,7 @@ namespace Laba3
     {
         static void Main()
         {
-
+            Console.WriteLine("Лабараторная работа 3");
             //1
             Console.WriteLine("Задание 1 \n");
             Console.WriteLine("Введите Хнач: ");
@@ -36,9 +36,12 @@ namespace Laba3
                 double Y = Convert.ToDouble(Console.ReadLine());
                 Console.Write("Введите r:");
                 double R = Convert.ToDouble(Console.ReadLine());
-                Console.Write("Введите r2:");
-                double R2 = Convert.ToDouble(Console.ReadLine());
-                Console.WriteLine("№{0} | Отчет о попадании: {1} \n",i,Shot(shots,X,Y,R,R2));
+                Console.Write("Введите a:");
+                double a = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Введите b:");
+                double b = Convert.ToDouble(Console.ReadLine());
+
+                Console.WriteLine("№{0} | Отчет о попадании: {1} \n",i,Shot(shots,X,Y,R,a,b));
             }
             Console.WriteLine("\nPress Entre to continue");
             Console.ReadKey();
@@ -83,17 +86,29 @@ namespace Laba3
             return y;
         }
 
-        public static bool Shot (int shots, double X, double Y, double R, double R2)
+        public static bool Shot (int shots, double x, double y, double R, double a, double b)
+
         {
             bool pop = false;
-            for (int i = shots; i <= shots; i++) { 
-                if (Math.Pow(X, 2) + Math.Pow(Y, 2) <= Math.Pow(R, 2) && Math.Pow(X, 2) + Math.Pow(Y, 2) >= Math.Pow(R2, 2) && ((X >= 0 && Y >= 0) || X <= 0 && Y <= 0))
+            for (int i = shots; i <= shots; i++) {
+                bool hitOrNotHit = false;
+                if ((Math.Pow(x, 2) + Math.Pow(y, 2) >= Math.Pow(R, 2)) && x >= 0 && y >= 0 && x <= a && y <= b)
                 {
-                    pop = true;
-                    
+                    hitOrNotHit = true;
                 }
                 else
-                    Console.WriteLine("Не пробил");
+                if (x <= 0 && y <= 0 && (Math.Pow(x, 2) + Math.Pow(y, 2) <= Math.Pow(R, 2)) && x >= -a && y >= -b)
+                {
+                    hitOrNotHit = true;
+                }
+                if (hitOrNotHit == true)
+                {
+                    Console.WriteLine("Точка попадает");
+                }
+                else
+                {
+                    Console.WriteLine("Точка не попадает");
+                }
             }
             return pop;
 
